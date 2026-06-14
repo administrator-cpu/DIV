@@ -1,25 +1,16 @@
 "use client";
+
 import React, { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // 1. Import Next.js router
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { DIV_PRODUCTS } from "../../../src/constants/productsData"; // Check your import path!
 
-// 2. Added 'link' property to your data structure
-const SLIDES_DATA = [
-  { id: 1, link: "/destination-1" }, 
-  { id: 2, link: "/destination-2" }, 
-  { id: 3, link: "/destination-3" }, 
-  { id: 4, link: "/destination-4" }, 
-  { id: 5, link: "/destination-5" }, 
-  { id: 6, link: "/destination-6" },
-];
-
-function IconGalleryCarousel() {
+export default function IconGalleryCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  
-  const router = useRouter(); // 3. Initialize the router
+  const router = useRouter();
 
-  const slides = SLIDES_DATA;
-  const len = slides.length;
+  const len = DIV_PRODUCTS.length;
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev === len - 1 ? 0 : prev + 1));
@@ -37,80 +28,101 @@ function IconGalleryCarousel() {
     return () => clearInterval(timer);
   }, [isPaused, nextSlide, len]);
 
+  const getCardAnimation = (index) => {
+    const diff = (index - currentSlide + len) % len;
+
+    if (diff === 0) return { x: 0, y: 0, rotate: 0, scale: 1.1, zIndex: 30, opacity: 1 };
+    if (diff === 1) return { x: 180, y: 30, rotate: 6, scale: 0.95, zIndex: 20, opacity: 1 };
+    if (diff === len - 1) return { x: -180, y: 30, rotate: -6, scale: 0.95, zIndex: 20, opacity: 1 };
+    if (diff === 2) return { x: 340, y: 60, rotate: 12, scale: 0.85, zIndex: 10, opacity: 0.7 };
+    if (diff === len - 2) return { x: -340, y: 60, rotate: -12, scale: 0.85, zIndex: 10, opacity: 0.7 };
+    
+    return { x: 0, y: 150, rotate: 0, scale: 0.5, zIndex: 0, opacity: 0 };
+  };
+
   return (
-    <div className="flex items-center justify-center w-full">
-      <div className="relative flex items-center justify-between w-full max-w-7xl mx-auto h-[250px] md:h-[300px]">
-        
-        <button 
-            onClick={prevSlide}
-            className="z-40 p-2 md:p-4 text-gray-200 hover:text-black transition-colors"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
-        </button>
-
-        <div 
-          className="relative w-full h-full flex items-center justify-center overflow-hidden"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {slides.map((slide, index) => {
-            const isActive = index === currentSlide;
-            const isPrev1 = index === (currentSlide - 1 + len) % len;
-            const isNext1 = index === (currentSlide + 1) % len;
-            const isPrev2 = index === (currentSlide - 2 + len) % len;
-            const isNext2 = index === (currentSlide + 2) % len;
-
-            let positionClasses = "opacity-0 scale-50 z-0 translate-x-0 pointer-events-none";
-
-            // 4. Added 'cursor-pointer' to the isActive classes
-            if (isActive) {
-              positionClasses = "opacity-100 scale-100 z-30 translate-x-0 cursor-pointer hover:shadow-2xl"; 
-            } else if (isPrev1) {
-              positionClasses = "opacity-80 scale-[0.80] z-20 -translate-x-[60%] md:-translate-x-[70%] cursor-pointer";
-            } else if (isNext1) {
-              positionClasses = "opacity-80 scale-[0.80] z-20 translate-x-[60%] md:translate-x-[70%] cursor-pointer";
-            } else if (isPrev2) {
-              positionClasses = "opacity-40 scale-[0.60] z-10 -translate-x-[110%] md:-translate-x-[120%] cursor-pointer";
-            } else if (isNext2) {
-              positionClasses = "opacity-40 scale-[0.60] z-10 translate-x-[110%] md:translate-x-[120%] cursor-pointer";
-            }
-
-            return (
-              <div
-                key={slide.id}
-                onClick={() => {
-                  // 5. Navigate if active, otherwise slide left/right!
-                  if (isActive && slide.link) {
-                      router.push(slide.link);
-                  }
-                  if (isPrev1 || isPrev2) prevSlide();
-                  if (isNext1 || isNext2) nextSlide();
-                }}
-                className={`absolute inset-0 m-auto w-[50%] md:w-[30%] max-w-[270px] aspect-square border-2 rounded-3xl overflow-hidden transition-all duration-700 ease-in-out shadow-lg ${positionClasses} bg-gray-200`}
-              >
-                <div className={`absolute inset-0 bg-black/10 transition-opacity duration-700 ${isActive ? 'opacity-0' : 'opacity-100'}`} />
-                
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-gray-400 text-6xl font-bold">{slide.id}</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <button 
-            onClick={nextSlide}
-            className="z-40 p-2 md:p-4 text-gray-200 hover:text-black transition-colors"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-        </button>
+    <section 
+      className="relative min-h-[60vh] w-full overflow-hidden py-24 flex flex-col items-center bg-gray-50/50"
+      aria-label="Core Business Solutions"
+    >
+      <div className="">
+        <h2 className="sr-only">Our Core Solutions</h2>
+        <p className="sr-only">Secure, scalable, and intelligent software architecture.</p>
       </div>
-    </div>
+
+      <div
+        className="relative w-full max-w-6xl flex justify-center items-start h-[400px]"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {DIV_PRODUCTS.map((slide, index) => {
+          const animState = getCardAnimation(index);
+          const isActive = index === currentSlide;
+
+          return (
+            <motion.div
+              key={slide.id}
+              initial={false}
+              animate={{
+                x: animState.x,
+                y: animState.y,
+                rotate: animState.rotate,
+                scale: animState.scale,
+                opacity: animState.opacity,
+                zIndex: animState.zIndex,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                damping: 16,
+                mass: 0.8,
+              }}
+              onClick={() => {
+                const diff = (index - currentSlide + len) % len;
+                if (diff === 0 && slide.link) {
+                  router.push(slide.link); 
+                } else if (diff === 1 || diff === 2) {
+                  nextSlide(); 
+                } else if (diff === len - 1 || diff === len - 2) {
+                  prevSlide(); 
+                }
+              }}
+              aria-hidden={!isActive}
+              className={`absolute w-[320px] bg-white rounded-3xl p-8 shadow-xl shadow-black/5 border border-gray-100 ${
+                isActive ? "cursor-pointer hover:shadow-2xl hover:shadow-black/10" : "cursor-pointer"
+              }`}
+            >
+              {!isActive && (
+                <div className="absolute inset-0 bg-white/40 rounded-3xl z-10 pointer-events-none transition-colors duration-300" />
+              )}
+
+              {/* Dynamic Icon added here */}
+              <div className="w-12 h-12 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center mb-6">
+                {slide.heroIcon && <slide.heroIcon className="w-6 h-6" />}
+              </div>
+
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                {slide.title}
+              </h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-8 h-20">
+                {slide.shortDesc}
+              </p>
+
+              <button
+                aria-label={`Learn more about ${slide.title}`}
+                className={`px-6 py-2 rounded-full font-medium text-sm transition-all shadow-md ${
+                  isActive
+                    ? "bg-gradient-to-r from-pink-500 to-yellow-400 text-white hover:opacity-90 hover:scale-105"
+                    : "bg-gray-100 text-gray-400"
+                }`}
+                tabIndex={isActive ? 0 : -1}
+              >
+                {isActive ? "See More" : "View"}
+              </button>
+            </motion.div>
+          );
+        })}
+      </div>
+    </section>
   );
 }
-
-export default IconGalleryCarousel;

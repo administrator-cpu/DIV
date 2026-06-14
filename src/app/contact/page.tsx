@@ -1,9 +1,13 @@
-import React from 'react'
+import ContactSection from '../../../components/Contact/ContactSection';
 
-function page() {
+export const metadata = {
+  title: 'Contact Us | DIV',
+};
+
+export default function ContactPage() {
   return (
-    <div>page</div>
-  )
+    <div className="">
+      <ContactSection />
+    </div>
+  );
 }
-
-export default page
