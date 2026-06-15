@@ -1,4 +1,4 @@
-import { DIV_PRODUCTS } from '@/constants/productsData';
+import { DIV_PRODUCTS } from '../constants/productsData';
 
 export default function sitemap() {
   const baseUrl = 'https://thediv.in'; // Replace with your production domain
