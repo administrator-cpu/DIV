@@ -38,7 +38,7 @@ export default function TechnologyEcosystemSection() {
         </motion.p>
 
         {/* Tech Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left mb-12">
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left mb-12`}>
           {techStackData.map((tech, index) => (
             <motion.article
               key={tech.id}
@@ -97,7 +97,7 @@ export default function TechnologyEcosystemSection() {
             </p>
 
             {/* SEO fix: Description List (<dl>) for Key-Value data */}
-            <dl className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 w-full mb-4 border-t border-gray-800 pt-16">
+            <dl className={`grid grid-cols-2 lg:grid-cols-${ecosystemStats?.length} gap-8 md:gap-12 w-full mb-4 border-t border-gray-800 pt-16`}>
               {ecosystemStats.map((stat, index) => (
                 <div key={index} className="flex flex-col items-center">
                   <dt className="text-gray-400 text-sm md:text-base font-medium order-2 mt-2">

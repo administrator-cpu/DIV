@@ -10,6 +10,22 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const product = DIV_PRODUCTS.find((p) => p.id === id);
+
+  if (!product) return { title: 'Product Not Found' };
+
+  return {
+    title: product.title, // e.g., "Samadhan | Development Innovation Vector"
+    description: product.shortDesc,
+    openGraph: {
+      title: `${product.title} Architecture`,
+      description: product.shortDesc,
+    },
+  };
+}
+
 export default async function DynamicProductPage(props) {
   const params = await props.params;
   const { id } = params;

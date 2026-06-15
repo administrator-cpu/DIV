@@ -22,7 +22,7 @@ export default function Hero() {
         <TitleCard />
         <IconGalleryCarousel />
         <TechStack/>
-        <Reviews/>
+        {/* <Reviews/> */}
         {/* <Services/> */}
         <Features/>
         <FaqSection/>

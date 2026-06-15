@@ -1,11 +1,17 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 // import { heroContent } from "@/constants/heroData";
 import { heroContent } from "../../../src/constants/heroData";
-import { FEATURED_REVIEWS } from "../../../src/constants/testimonialsData";
+import { ALL_REVIEWS, getRandomFeaturedReviews } from "../../../src/constants/reviewsData";
 
 function TitleCard() {
+  const [featuredReviews, setFeaturedReviews] = useState(ALL_REVIEWS.slice(0, 5));
+
+  useEffect(() => {
+    const randomSelection = getRandomFeaturedReviews(5);
+    setFeaturedReviews(randomSelection);
+  }, []);
   return (
     <section className="z-10 w-full m-auto max-w-5xl flex flex-col items-center justify-center text-center min-h-[280px] overflow-hidden pt-24 pb-12">
       <div className="max-w-4xl mx-auto text-center flex flex-col gap-6 px-4 relative z-10">
@@ -41,12 +47,12 @@ function TitleCard() {
         </div>
 
         {/* Trust Indicators (SEO/AIO Friendly) */}
-        <div 
+        {/* <div 
           className="flex flex-col items-center gap-3"
           aria-label={`Trusted by ${heroContent.trust.count} people`}
         >
             <div className="flex -space-x-3">
-            {FEATURED_REVIEWS.map((review, index) => (
+            {featuredReviews.map((review, index) => (
               <img
                 key={review.id} // Better React practice than using the map index
                 src={review.avatar}
@@ -58,9 +64,9 @@ function TitleCard() {
           </div>
           <p className="text-sm text-gray-600 font-medium">
             Trusted By{" "}
-            <span className="font-bold text-black">{heroContent.trust.count} People</span>
+            <span className="font-bold text-black">{ALL_REVIEWS?.length}+ People</span>
           </p>
-        </div>
+        </div> */}
         
       </div>
     </section>

@@ -24,11 +24,22 @@ export const footerData = {
     href: product.link,
   })),
 
-  company: [
+ company: [
     { label: "About Us", href: "/about" },
-    // { label: "Careers", href: "/careers" },
-    // { label: "Privacy Policy", href: "/privacy" },
-    // { label: "Terms of Service", href: "/terms" }
+    { label: "Core Services", href: "/services" },
+    { label: "Our Products", href: "/products" },
+    { label: "Client Reviews", href: "/reviews" }, 
+    { label: "Careers", href: "/careers" },         
+    { label: "Support & Help", href: "/support" },  
+    { label: "Contact Us", href: "/contact" }
+  ],
+
+  legal: [
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms & Conditions", href: "/terms" },
+    { label: "Cookies Policy", href: "/cookies" },
+    { label: "Data Deletion", href: "/data-deletion" },
+    { label: "Copyright", href: "/copyright" }
   ],
 
   contact: {

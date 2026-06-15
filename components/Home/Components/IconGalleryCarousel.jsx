@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { DIV_PRODUCTS } from "../../../src/constants/productsData"; // Check your import path!
+import Link from "next/link";
 
 export default function IconGalleryCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -31,23 +32,51 @@ export default function IconGalleryCarousel() {
   const getCardAnimation = (index) => {
     const diff = (index - currentSlide + len) % len;
 
-    if (diff === 0) return { x: 0, y: 0, rotate: 0, scale: 1.1, zIndex: 30, opacity: 1 };
-    if (diff === 1) return { x: 180, y: 30, rotate: 6, scale: 0.95, zIndex: 20, opacity: 1 };
-    if (diff === len - 1) return { x: -180, y: 30, rotate: -6, scale: 0.95, zIndex: 20, opacity: 1 };
-    if (diff === 2) return { x: 340, y: 60, rotate: 12, scale: 0.85, zIndex: 10, opacity: 0.7 };
-    if (diff === len - 2) return { x: -340, y: 60, rotate: -12, scale: 0.85, zIndex: 10, opacity: 0.7 };
-    
+    if (diff === 0)
+      return { x: 0, y: 0, rotate: 0, scale: 1.1, zIndex: 30, opacity: 1 };
+    if (diff === 1)
+      return { x: 180, y: 30, rotate: 6, scale: 0.95, zIndex: 20, opacity: 1 };
+    if (diff === len - 1)
+      return {
+        x: -180,
+        y: 30,
+        rotate: -6,
+        scale: 0.95,
+        zIndex: 20,
+        opacity: 1,
+      };
+    if (diff === 2)
+      return {
+        x: 340,
+        y: 60,
+        rotate: 12,
+        scale: 0.85,
+        zIndex: 10,
+        opacity: 0.7,
+      };
+    if (diff === len - 2)
+      return {
+        x: -340,
+        y: 60,
+        rotate: -12,
+        scale: 0.85,
+        zIndex: 10,
+        opacity: 0.7,
+      };
+
     return { x: 0, y: 150, rotate: 0, scale: 0.5, zIndex: 0, opacity: 0 };
   };
 
   return (
-    <section 
+    <section
       className="relative min-h-[60vh] w-full overflow-hidden py-24 flex flex-col items-center bg-gray-50/50"
       aria-label="Core Business Solutions"
     >
       <div className="">
         <h2 className="sr-only">Our Core Solutions</h2>
-        <p className="sr-only">Secure, scalable, and intelligent software architecture.</p>
+        <p className="sr-only">
+          Secure, scalable, and intelligent software architecture.
+        </p>
       </div>
 
       <div
@@ -80,16 +109,18 @@ export default function IconGalleryCarousel() {
               onClick={() => {
                 const diff = (index - currentSlide + len) % len;
                 if (diff === 0 && slide.link) {
-                  router.push(slide.link); 
+                  router.push(slide.link);
                 } else if (diff === 1 || diff === 2) {
-                  nextSlide(); 
+                  nextSlide();
                 } else if (diff === len - 1 || diff === len - 2) {
-                  prevSlide(); 
+                  prevSlide();
                 }
               }}
               aria-hidden={!isActive}
               className={`absolute w-[320px] bg-white rounded-3xl p-8 shadow-xl shadow-black/5 border border-gray-100 ${
-                isActive ? "cursor-pointer hover:shadow-2xl hover:shadow-black/10" : "cursor-pointer"
+                isActive
+                  ? "cursor-pointer hover:shadow-2xl hover:shadow-black/10"
+                  : "cursor-pointer"
               }`}
             >
               {!isActive && (
@@ -108,8 +139,14 @@ export default function IconGalleryCarousel() {
                 {slide.shortDesc}
               </p>
 
-              <button
+              {/* <button
                 aria-label={`Learn more about ${slide.title}`}
+                type="button"
+                onClick={() => {
+                  if (isActive) {
+                    router.push(`/products/${slide.id}`);
+                  }
+                }}
                 className={`px-6 py-2 rounded-full font-medium text-sm transition-all shadow-md ${
                   isActive
                     ? "bg-gradient-to-r from-pink-500 to-yellow-400 text-white hover:opacity-90 hover:scale-105"
@@ -118,7 +155,20 @@ export default function IconGalleryCarousel() {
                 tabIndex={isActive ? 0 : -1}
               >
                 {isActive ? "See More" : "View"}
-              </button>
+              </button> */}
+              <Link
+                // Change this href to wherever you want them to go (e.g., slide.link)
+                href={`/products/${slide.id}`}
+                aria-label={`Learn more about ${slide.title}`}
+                className={`px-6 py-2 inline-block text-center rounded-full font-medium text-sm transition-all shadow-md ${
+                  isActive
+                    ? "bg-gradient-to-r from-pink-500 to-yellow-400 text-white hover:opacity-90 hover:scale-105 cursor-pointer"
+                    : "bg-gray-100 text-gray-400 pointer-events-none" // Prevents clicking if inactive
+                }`}
+                tabIndex={isActive ? 0 : -1}
+              >
+                {isActive ? "See More" : "View"}
+              </Link>
             </motion.div>
           );
         })}

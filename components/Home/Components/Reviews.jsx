@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ReviewCard from "./ReviewCard";
-import { FEATURED_REVIEWS, BULK_REVIEWS } from "../../../src/constants/testimonialsData";
+// import { featuredReviews, ALL_REVIEWS } from "../../../src/constants/testimonialsData";
+import { ALL_REVIEWS, getRandomFeaturedReviews } from "../../../src/constants/reviewsData";
 
 const StarIcon = ({ filled }) => (
   <svg
@@ -22,22 +23,36 @@ const StarIcon = ({ filled }) => (
 );
 
 export default function EnhancedTestimonialSection() {
+ const [featuredReviews, setFeaturedReviews] = useState(ALL_REVIEWS.slice(0, 5));
+
+  // 2. Once the component mounts on the client browser, shuffle them!
+  useEffect(() => {
+    // Grabs 5 random, unique reviews
+    const randomSelection = getRandomFeaturedReviews(5);
+    setFeaturedReviews(randomSelection);
+  }, []);
 
   const [randomAvatars, setRandomAvatars] = useState([]);
 
   // Safely shuffle and pick 3 random avatars on the client side
   useEffect(() => {
 
-    const shuffled = [...FEATURED_REVIEWS].sort(() => 0.5 - Math.random());
+    const shuffled = [...featuredReviews].sort(() => 0.5 - Math.random());
     setRandomAvatars(shuffled.slice(0, 3));
   }, []);
 
   const [activeIndex, setActiveIndex] = useState(1);
 
   // Split bulk reviews for the two marquee rows
-  const row1 = BULK_REVIEWS.slice(0, Math.ceil(BULK_REVIEWS.length / 2));
-  const row2 = BULK_REVIEWS.slice(Math.ceil(BULK_REVIEWS.length / 2));
+  const row1 = ALL_REVIEWS.slice(0, Math.ceil(ALL_REVIEWS.length / 2));
+  const row2 = ALL_REVIEWS.slice(Math.ceil(ALL_REVIEWS.length / 2));
 
+  const totalReviews = ALL_REVIEWS.length;
+  
+  // Calculate average rating and round it to 1 decimal place (e.g., "4.8")
+  const averageRating = totalReviews > 0 
+    ? (ALL_REVIEWS.reduce((sum, review) => sum + review.rating, 0) / totalReviews).toFixed(1)
+    : "0.0";
   return (
     <section 
       className="relative w-full py-24 bg-white flex flex-col items-center overflow-hidden"
@@ -80,9 +95,9 @@ export default function EnhancedTestimonialSection() {
           
           <div className="flex items-center gap-1.5 border-l border-gray-200 pl-3">
             <StarIcon filled={true} />
-            <span className="font-bold text-gray-900" aria-hidden="true">4.9/5</span>
+            <span className="font-bold text-gray-900" aria-hidden="true">{averageRating}/5</span>
             <span className="text-sm text-gray-500 font-medium" aria-hidden="true">
-              from 200+ reviews
+              from {totalReviews}+ reviews
             </span>
           </div>
         </div>
@@ -110,17 +125,17 @@ export default function EnhancedTestimonialSection() {
           >
             {/* SEO: Semantic Blockquote */}
             <blockquote className="text-lg md:text-xl text-gray-700 font-medium leading-relaxed max-w-2xl mb-8">
-              "{FEATURED_REVIEWS[activeIndex].text}"
+              "{featuredReviews[activeIndex].text}"
             </blockquote>
             
             <div 
               className="flex gap-1 mb-4"
-              aria-label={`Rated ${FEATURED_REVIEWS[activeIndex].rating} out of 5 stars`}
+              aria-label={`Rated ${featuredReviews[activeIndex].rating} out of 5 stars`}
             >
               {[...Array(5)].map((_, index) => (
                 <StarIcon
                   key={index}
-                  filled={index < FEATURED_REVIEWS[activeIndex].rating}
+                  filled={index < featuredReviews[activeIndex].rating}
                 />
               ))}
             </div>
@@ -128,10 +143,10 @@ export default function EnhancedTestimonialSection() {
             {/* SEO: Semantic Figcaption for Author */}
             <figcaption className="flex flex-col items-center">
               <span className="text-lg font-bold text-gray-900 block">
-                {FEATURED_REVIEWS[activeIndex].name}
+                {featuredReviews[activeIndex].name}
               </span>
               <span className="text-gray-500 text-sm block mt-1">
-                — {FEATURED_REVIEWS[activeIndex].role}
+                — {featuredReviews[activeIndex].role}
               </span>
             </figcaption>
           </motion.figure>
@@ -148,7 +163,7 @@ export default function EnhancedTestimonialSection() {
         role="tablist"
         aria-label="Select a featured review"
       >
-        {FEATURED_REVIEWS.map((review, index) => {
+        {featuredReviews.map((review, index) => {
           const isActive = index === activeIndex;
           return (
             <button

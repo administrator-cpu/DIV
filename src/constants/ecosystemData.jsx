@@ -45,7 +45,7 @@ export const techStackData = [
 ];
 
 export const ecosystemStats = [
-  { value: "50", suffix: "+", label: "Business Workflows Automated" },
+  // { value: "50", suffix: "+", label: "Business Workflows Automated" },
   { value: "99.9", suffix: "%", label: "Uptime & Data Security" },
   { value: "30", suffix: "%", label: "Reduction In Operational Costs" },
   { value: "24/7", suffix: "", label: "System Monitoring & Support" }

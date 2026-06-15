@@ -34,7 +34,12 @@ function ReviewCard({review,i}) {
       </div>
       <p className="text-gray-700 text-sm mb-4 line-clamp-3">"{review.text}"</p>
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-gray-200" />
+        {/* <div className="w-10 h-10 rounded-full bg-gray-200" /> */}
+        <img 
+                    src={review.avatar} 
+                    alt={review.name}
+                    className="w-10 h-10 rounded-full border-2 border-white object-cover bg-white"
+                  />
         <div>
           <h4 className="font-bold text-sm text-gray-900">{review.name}</h4>
           <p className="text-xs text-gray-500">{review.role}</p>
