@@ -1,15 +1,15 @@
+'use client';
+
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../../../../lib/axios';
+import api from '@/lib/axios';  // ← Fixed: default import with @ alias
 
 // --- API Helper Functions ---
 const fetchProjects = async () => {
-  // Axios automatically returns the parsed JSON inside the `data` property
-  const response = await api.get('/projects'); 
-  return response.data; 
+  const response = await api.get('/projects');
+  return response.data;
 };
 
 const createProject = async (newProject) => {
-  // Axios automatically stringifies the payload
   const response = await api.post('/projects', newProject);
   return response.data;
 };
@@ -20,6 +20,7 @@ export function useProjects() {
   return useQuery({
     queryKey: ['projects'],
     queryFn: fetchProjects,
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 }
 
@@ -29,8 +30,10 @@ export function useCreateProject() {
   return useMutation({
     mutationFn: createProject,
     onSuccess: () => {
-      // Refresh the projects list after a successful creation
       queryClient.invalidateQueries({ queryKey: ['projects'] });
+    },
+    onError: (error) => {
+      console.error('Failed to create project:', error.message);
     },
   });
 }
