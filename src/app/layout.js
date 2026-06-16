@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import Providers from "../../components/Providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata = {
   metadataBase: new URL("https://thediv.in"), // Replace with your actual production domain
@@ -75,6 +76,7 @@ export default function RootLayout({ children }) {
         </Providers>
         <SpeedInsights />
         <GoogleAnalytics />
+        <Analytics/>
       </body>
     </html>
   );
