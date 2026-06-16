@@ -12,7 +12,7 @@ function Filters() {
     <section className="flex flex-col w-full max-w-7xl mx-auto gap-4 p-4">
       
       {/* Scrollable Filter Pills Row */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+      {/* <div className="flex items-center gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
         {filters.map((filter) => (
           <button
             key={filter}
@@ -26,7 +26,7 @@ function Filters() {
             {filter}
           </button>
         ))}
-      </div>
+      </div> */}
 
       {/* Advanced Search Bar */}
       <form 
