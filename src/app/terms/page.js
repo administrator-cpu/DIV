@@ -31,7 +31,7 @@ export default function TermsAndConditionsPage() {
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Agreement to Terms</h2>
             <p>
-              These Terms and Conditions constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you"), and Development Innovation Vector Private Limited ("DIV", "we", "us", or "our"), located in Noida Sector 31, Delhi-NCR, India. By accessing our website, utilizing our enterprise platforms (including but not limited to Samadhan, Bahi Khata, and Connect CRM), or engaging our custom engineering services, you agree that you have read, understood, and agreed to be bound by all of these Terms and Conditions.
+              These Terms and Conditions constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you"), and Development Innovation Vector Private Limited ("DIV", "we", "us", or "our"), located in Delhi-NCR, India. By accessing our website, utilizing our enterprise platforms (including but not limited to Samadhan, Bahi Khata, and Connect CRM), or engaging our custom engineering services, you agree that you have read, understood, and agreed to be bound by all of these Terms and Conditions.
             </p>
             <p className="mt-4">
               Specific custom development projects may be subject to additional Master Service Agreements (MSAs) or Statements of Work (SOWs), which will supersede these general terms in the event of a conflict.
@@ -89,7 +89,7 @@ export default function TermsAndConditionsPage() {
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Governing Law and Jurisdiction</h2>
             <p>
-              These Terms shall be governed by and defined following the laws of India. Development Innovation Vector Private Limited and yourself irrevocably consent that the courts of New Delhi / Noida, Uttar Pradesh, shall have exclusive jurisdiction to resolve any dispute which may arise in connection with these terms.
+              These Terms shall be governed by and defined following the laws of India. Development Innovation Vector Private Limited and yourself irrevocably consent that the courts of New Delhi, shall have exclusive jurisdiction to resolve any dispute which may arise in connection with these terms.
             </p>
           </div>
 
@@ -100,7 +100,7 @@ export default function TermsAndConditionsPage() {
             </p>
             <div className="bg-gray-50 p-6 rounded-xl border border-gray-100 mt-4 inline-block">
               <p className="font-bold text-gray-900">Development Innovation Vector Private Limited</p>
-              <p>Noida Sector 31</p>
+              {/* <p>Noida Sector 31</p> */}
               <p>Delhi-NCR, India</p>
               <p className="mt-2"><strong>Email:</strong> <a href="mailto:info@thediv.in" className="text-pink-500 hover:underline">info@thediv.in</a></p>
             </div>

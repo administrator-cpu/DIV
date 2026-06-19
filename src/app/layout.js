@@ -21,7 +21,7 @@ export const metadata = {
     "Custom CRM",
     "Workflow Automation",
     "Cloud Infrastructure",
-    "DIV Noida",
+    "DIV",
     "B2B Software Agency",
   ],
   authors: [{ name: "spyder" }],

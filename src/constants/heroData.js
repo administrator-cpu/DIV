@@ -11,7 +11,7 @@ export const heroContent = {
   description: "We engineer scalable web applications, secure CRMs, and robust APIs. Transform your business operations with intelligent tech solutions built for growth.",
   
   ctas: [
-    { id: 1, label: "Start Your Project", href: "/contact", primary: true }, 
+    { id: 1, label: "Start Your Project", href: "/support", primary: true }, 
     { id: 2, label: "View Our Work", href: "/products", primary: false }
   ],
   trust: {

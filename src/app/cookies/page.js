@@ -89,7 +89,7 @@ export default function CookiesPolicyPage() {
             </p>
             <div className="bg-gray-50 p-6 rounded-xl border border-gray-100 mt-4 inline-block">
               <p className="font-bold text-gray-900">Development Innovation Vector Private Limited</p>
-              <p>Noida Sector 31</p>
+              {/* <p>Noida Sector 31</p> */}
               <p>Delhi-NCR, India</p>
               <p className="mt-2"><strong>Email:</strong> <a href="mailto:info@thediv.in" className="text-pink-500 hover:underline">info@thediv.in</a></p>
             </div>

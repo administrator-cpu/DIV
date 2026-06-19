@@ -14,7 +14,7 @@ export const SUPPORT_PAGE_DATA = {
   
   contactInfo: {
     email: "info@thediv.in",
-    address: "Noida Sector 31, Delhi-NCR, India",
+    // address: "Noida Sector 31, Delhi-NCR, India",
     responseTime: "We aim to respond to all technical inquiries within 24 hours."
   },
 

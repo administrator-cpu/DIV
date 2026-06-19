@@ -28,10 +28,10 @@ export const footerData = {
     { label: "About Us", href: "/about" },
     { label: "Core Services", href: "/services" },
     { label: "Our Products", href: "/products" },
-    { label: "Client Reviews", href: "/reviews" }, 
-    { label: "Careers", href: "/careers" },         
+    // { label: "Client Reviews", href: "/reviews" }, 
+    // { label: "Careers", href: "/careers" },         
     { label: "Support & Help", href: "/support" },  
-    { label: "Contact Us", href: "/contact" }
+    // { label: "Contact Us", href: "/contact" }
   ],
 
   legal: [
@@ -44,7 +44,7 @@ export const footerData = {
 
   contact: {
     email: "info@thediv.in",
-    location: "Noida Sector 31",
+    // location: "Noida Sector 31",
     socials: [
       { 
         id: 1, 

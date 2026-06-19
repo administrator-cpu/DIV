@@ -137,7 +137,9 @@ export default function Navbar() {
                   aria-haspopup="true"
                 >
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-yellow-400 flex items-center justify-center text-white text-sm font-bold">
-                    {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                   {user?.avatarUrl? 
+                   <img src={user?.avatarUrl} alt={user?.name} className="w-full h-full rounded-full object-cover" />:
+                    user?.name?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
                   <span className="hidden lg:block text-sm font-semibold text-gray-700">
                     {user?.name?.split(' ')[0]}

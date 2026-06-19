@@ -8,6 +8,6 @@ export const navbarData = {
   ],
   cta: {
     label: "Let's Talk",
-    href: "/contact"
+    href: "/support"
   }
 };

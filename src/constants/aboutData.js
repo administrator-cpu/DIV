@@ -79,7 +79,7 @@ export const ABOUT_PAGE_DATA = {
 
   headquarters: {
     heading: "Our Headquarters",
-    location: "Noida Sector 31",
+    // location: "Noida Sector 31",
     region: "Delhi-NCR, India",
     description: "Situated in the heart of India's premier technological hub, our engineering teams build solutions that scale globally.",
     icon: MapPinIcon

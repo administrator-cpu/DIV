@@ -19,7 +19,7 @@ export const SERVICES_PAGE_DATA = {
     headlinePart1: "Architecting Scalable",
     headlinePart2: "Digital Ecosystems",
     description: "We don't just build software. We engineer resilient infrastructure, automated workflows, and custom enterprise tools designed to eliminate bottlenecks and accelerate growth.",
-    primaryCta: { label: "Schedule Technical Audit", href: "/contact" },
+    primaryCta: { label: "Schedule Technical Audit", href: "/support" },
   },
 
   pillars: [

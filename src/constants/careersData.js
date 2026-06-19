@@ -9,7 +9,7 @@ export const CAREERS_PAGE_DATA = {
   hero: {
     badge: "Join DIV",
     title: "Build software that scales.",
-    description: "We are an engineering-first company based in Noida Sector 31. We build resilient enterprise ecosystems, and we are looking for top-tier talent to join our mission."
+    description: "We are an engineering-first company based in India. We build resilient enterprise ecosystems, and we are looking for top-tier talent to join our mission."
   },
 
   perks: [
@@ -36,14 +36,14 @@ export const CAREERS_PAGE_DATA = {
       id: "full-stack-engineer",
       title: "Full-Stack Node.js Engineer",
       type: "Full-time",
-      location: "Noida / Hybrid",
+      location: "Hybrid",
       description: "We are looking for an experienced backend engineer to architect RESTful APIs, manage Redis caching strategies, and optimize our PM2 cluster deployments."
     },
     {
       id: "frontend-architect",
       title: "Frontend Architect (Next.js)",
       type: "Full-time",
-      location: "Noida / Hybrid",
+      location: "Hybrid",
       description: "Lead the UI/UX architecture of our custom CRM tools. Must have deep expertise in React, Tailwind CSS, and Framer Motion."
     },
     {
