@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { navbarData } from '../src/constants/navbarData';
 import { useAuthContext } from './Providers';
 import api from '../lib/axios';
+import { useProducts } from './Product/ProductContext';
 
 // Custom Native SVGs to avoid library dependencies
 const MenuIcon = () => (
@@ -41,10 +42,11 @@ const DashboardIcon = () => (
 
 export default function Navbar() {
   const router = useRouter();
-  const { user, isAuthenticated, clearSession } = useAuthContext();
+  const { user, isAuthenticated, isHydrated, clearSession } = useAuthContext();
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
 
   // Handle Scroll styling
   useEffect(() => {
@@ -128,7 +130,7 @@ export default function Navbar() {
           {/* RIGHT: Auth Section & Mobile Menu Toggle */}
           <div className="flex items-center gap-4 relative z-[60]">
             {/* Authenticated User Menu */}
-            {isAuthenticated ? (
+            {isAuthenticated && isHydrated ? (
               <div data-user-menu className="relative">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -136,10 +138,12 @@ export default function Navbar() {
                   aria-expanded={isUserMenuOpen}
                   aria-haspopup="true"
                 >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-yellow-400 flex items-center justify-center text-white text-sm font-bold">
-                   {user?.avatarUrl? 
-                   <img src={user?.avatarUrl} alt={user?.name} className="w-full h-full rounded-full object-cover" />:
-                    user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-yellow-400 flex items-center justify-center text-white text-sm font-bold overflow-hidden">
+                    {user?.avatarUrl ? (
+                      <img src={user.avatarUrl} alt={user?.name} className="w-full h-full rounded-full object-cover" />
+                    ) : (
+                      user?.name?.charAt(0)?.toUpperCase() || 'U'
+                    )}
                   </div>
                   <span className="hidden lg:block text-sm font-semibold text-gray-700">
                     {user?.name?.split(' ')[0]}
@@ -166,7 +170,7 @@ export default function Navbar() {
                         </p>
                       </div>
 
-                      {/* Dashboard Link */}
+                      {/* Home Link */}
                       <Link
                         href="/"
                         onClick={() => setIsUserMenuOpen(false)}
@@ -176,7 +180,7 @@ export default function Navbar() {
                         Home
                       </Link>
 
-                      {/* Profile Link (placeholder for future) */}
+                      {/* Profile Link */}
                       <Link
                         href="/profile"
                         onClick={() => setIsUserMenuOpen(false)}
@@ -201,8 +205,8 @@ export default function Navbar() {
                   )}
                 </AnimatePresence>
               </div>
-            ) : (
-              /* --- NEW: Unauthenticated Login/Signup Buttons (Desktop) --- */
+            ) : isHydrated ? (
+              /* Unauthenticated — Login/Signup Buttons (Desktop) */
               <div className="hidden sm:flex items-center gap-4">
                 <Link
                   href="/login"
@@ -216,6 +220,12 @@ export default function Navbar() {
                 >
                   Sign Up
                 </Link>
+              </div>
+            ) : (
+              /* Skeleton while auth loads (Desktop) */
+              <div className="hidden sm:flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
+                <div className="w-20 h-4 bg-gray-200 rounded animate-pulse hidden lg:block" />
               </div>
             )}
 
@@ -244,17 +254,30 @@ export default function Navbar() {
             >
               <div className="flex flex-col px-6 py-8 space-y-6">
                 {/* Auth Status for Mobile */}
-                {isAuthenticated && (
+                {isAuthenticated && isHydrated ? (
                   <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-yellow-400 flex items-center justify-center text-white font-bold">
-                      {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-yellow-400 flex items-center justify-center text-white font-bold overflow-hidden">
+                      {user?.avatarUrl ? (
+                        <img src={user.avatarUrl} alt={user?.name} className="w-full h-full rounded-full object-cover" />
+                      ) : (
+                        user?.name?.charAt(0)?.toUpperCase() || 'U'
+                      )}
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-900">{user?.name}</p>
                       <p className="text-xs text-gray-500">{user?.email}</p>
                     </div>
                   </div>
-                )}
+                ) : !isHydrated ? (
+                  /* Skeleton while auth loads (Mobile) */
+                  <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
+                    <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
+                    <div className="space-y-2">
+                      <div className="w-24 h-4 bg-gray-200 rounded animate-pulse" />
+                      <div className="w-32 h-3 bg-gray-200 rounded animate-pulse" />
+                    </div>
+                  </div>
+                ) : null}
 
                 {/* Navigation Links */}
                 {navbarData.links.map((link) => (
@@ -269,7 +292,7 @@ export default function Navbar() {
                 ))}
 
                 {/* Authenticated Mobile Links */}
-                {isAuthenticated ? (
+                {isAuthenticated && isHydrated ? (
                   <>
                     <Link
                       href="/"
@@ -292,8 +315,8 @@ export default function Navbar() {
                       Sign Out
                     </button>
                   </>
-                ) : (
-                  /* --- NEW: Unauthenticated Login/Signup Buttons (Mobile) --- */
+                ) : isHydrated ? (
+                  /* Unauthenticated Mobile Links */
                   <div className="flex flex-col gap-3 mt-4">
                     <Link
                       href="/login"
@@ -309,6 +332,12 @@ export default function Navbar() {
                     >
                       Sign Up
                     </Link>
+                  </div>
+                ) : (
+                  /* Skeleton while auth loads (Mobile buttons) */
+                  <div className="flex flex-col gap-3 mt-4">
+                    <div className="w-full h-12 bg-gray-200 rounded-xl animate-pulse" />
+                    <div className="w-full h-12 bg-gray-200 rounded-xl animate-pulse" />
                   </div>
                 )}
               </div>

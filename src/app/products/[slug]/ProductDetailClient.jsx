@@ -8,6 +8,14 @@ import VideoThumbnail from '../../../../components/Product/VideoThumbnail';
 import PreviewImages from '../../../../components/Product/PreviewImages';
 import { useProduct } from '../../api/hooks/useProducts';
 
+// Helper function to extract YouTube ID from any YouTube URL format
+const getYouTubeId = (url) => {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+};
+
 export default function ProductDetailClient({ product: initialProduct, initialDataUpdatedAt }) {
   const [showVideo, setShowVideo] = useState(false);
 
@@ -17,6 +25,9 @@ export default function ProductDetailClient({ product: initialProduct, initialDa
   });
 
   const currentProduct = product || initialProduct;
+  
+  // Extract the ID from the URL provided by the database
+  const videoId = getYouTubeId(currentProduct.demoVideoUrl);
 
   return (
     <div className="min-h-screen bg-white">
@@ -42,15 +53,16 @@ export default function ProductDetailClient({ product: initialProduct, initialDa
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Demo Video */}
-            {currentProduct.demoVideoId && (
+            
+            {/* Demo Video - NOW CHECKING FOR videoId */}
+            {videoId && (
               <section>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Demo</h2>
                 {showVideo ? (
-                  <VideoEmbed videoId={currentProduct.demoVideoId} title={`${currentProduct.title} Demo`} />
+                  <VideoEmbed videoId={videoId} title={`${currentProduct.title} Demo`} />
                 ) : (
                   <VideoThumbnail
-                    videoId={currentProduct.demoVideoId}
+                    videoId={videoId}
                     title={`Watch ${currentProduct.title} demo`}
                     onClick={() => setShowVideo(true)}
                   />

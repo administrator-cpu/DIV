@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useProducts } from '../../app/api/hooks/useProducts';
 import ProductGrid from '../../../components/Product/ProductGrid';
+import { useQueryClient } from '@tanstack/react-query';
 
 const CATEGORIES = [
   { value: '', label: 'All Products' },
@@ -21,11 +22,20 @@ const SORT_OPTIONS = [
 export default function ProductsClient({ initialProducts, initialDataUpdatedAt }) {
   const [category, setCategory] = useState('');
   const [sort, setSort] = useState('default');
+  const queryClient = useQueryClient();
   
   const { data, isLoading, error } = useProducts(
     { category, sort },
     { initialData: { data: initialProducts, source: 'server' }, initialDataUpdatedAt }
   );
+
+  useEffect(() => {
+    if (data?.data) {
+      data.data.forEach((product) => {
+        queryClient.setQueryData(['product', product.slug], product);
+      });
+    }
+  }, [data, queryClient]);
 
   return (
     <div className="min-h-screen bg-gray-50">
