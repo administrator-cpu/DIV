@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePassword, forgotPasswordSchema, resetPasswordSchema } from '@thediv/auth-core';
-import ErrorBanner from '@/components/auth/ErrorBanner';
-import FormField from '@/components/auth/FormField';
-import SubmitButton from '@/components/auth/SubmitButton';
-import SuccessMessage from '@/components/auth/SuccessMessage';
+import ErrorBanner from '@/components/Auth/ErrorBanner';
+import FormField from '@/components/Auth/FormField';
+import SubmitButton from '@/components/Auth/SubmitButton';
+import SuccessMessage from '@/components/Auth/SuccessMessage';
 
 export default function ForgotPasswordPage() {
   // ✅ FIX: Use correct function names from SDK

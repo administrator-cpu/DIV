@@ -7,12 +7,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRegister, registerSchema } from '@thediv/auth-core';
 import { useAuthContext } from '@/components/Providers';
-import AuthLayout from '@/components/auth/AuthLayout';
-import OAuthButtons from '@/components/auth/OAuthButtons';
-import Divider from '@/components/auth/Divider';
-import ErrorBanner from '@/components/auth/ErrorBanner';
-import FormField from '@/components/auth/FormField';
-import SubmitButton from '@/components/auth/SubmitButton';
+import AuthLayout from '@/components/Auth/AuthLayout';
+import OAuthButtons from '@/components/Auth/OAuthButtons';
+import Divider from '@/components/Auth/Divider';
+import ErrorBanner from '@/components/Auth/ErrorBanner';
+import FormField from '@/components/Auth/FormField';
+import SubmitButton from '@/components/Auth/SubmitButton';
+
+
 
 const RIGHT_FEATURES = [
   'Access to all development services',
