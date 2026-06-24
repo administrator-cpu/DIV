@@ -121,7 +121,7 @@ export default function AboutPage() {
       </section>
 
       {/* --- LEADERSHIP / TEAM --- */}
-      {/* <section className="max-w-7xl mx-auto px-6 md:px-12 py-24">
+      <section className="max-w-7xl mx-auto px-6 md:px-12 py-24">
         <div className="mb-16 md:flex md:items-end md:justify-between">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
@@ -156,7 +156,7 @@ export default function AboutPage() {
             </motion.div>
           ))}
         </div>
-      </section> */}
+      </section>
 
       {/* --- HEADQUARTERS / LOCATION --- */}
       <section className="bg-gray-50 w-full py-20 px-6 border-t border-gray-200/60">

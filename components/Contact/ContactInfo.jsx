@@ -21,10 +21,10 @@ export default function ContactInfo() {
             <p className="font-semibold text-white mb-1">Call Us</p>
             <a href="tel:+910000000000" className="hover:text-pink-400 transition-colors">+91 00000 00000</a>
           </div>
-          <div>
+          {/* <div>
             <p className="font-semibold text-white mb-1">Visit Us</p>
             <p>Noida, Uttar Pradesh, India</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

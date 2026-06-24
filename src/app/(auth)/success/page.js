@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function AuthSuccessPage() {
+// 1. Rename the original function
+function AuthSuccessContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState('processing');
@@ -64,5 +65,23 @@ export default function AuthSuccessPage() {
         )}
       </div>
     </div>
+  );
+}
+
+// 2. Export the main page with a Suspense boundary
+export default function AuthSuccessPage() {
+  return (
+    <Suspense 
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-gray-50">
+          <div className="text-center">
+            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+            <h2 className="mt-6 text-2xl font-bold text-gray-900">Completing sign in...</h2>
+          </div>
+        </div>
+      }
+    >
+      <AuthSuccessContent />
+    </Suspense>
   );
 }

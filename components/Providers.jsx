@@ -1,9 +1,9 @@
-// components/Providers.jsx
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useAuth } from '@thediv/auth-core';
+import ProductProvider from './Product/ProductContext';
 
 const AuthContext = createContext(null);
 
@@ -23,35 +23,34 @@ function AuthProvider({ children }) {
   });
   
   const [isHydrated, setIsHydrated] = useState(false);
+  const hydrationTimeout = useRef(null);
 
   useEffect(() => {
-    if (!auth.isLoading && auth.isInitialized) {
+    if (auth.isInitialized) {
       setIsHydrated(true);
+      if (hydrationTimeout.current) {
+        clearTimeout(hydrationTimeout.current);
+        hydrationTimeout.current = null;
+      }
     }
-  }, [auth.isLoading, auth.isInitialized]);
+  }, [auth.isInitialized]);
 
-  // Debug: Log auth state changes
   useEffect(() => {
-    console.log('Auth State Updated:', {
-      isAuthenticated: auth.isAuthenticated,
-      isInitialized: auth.isInitialized,
-      user: auth.user,
-    });
-  }, [auth.isAuthenticated, auth.isInitialized, auth.user]);
+    if (!auth.isInitialized) {
+      hydrationTimeout.current = setTimeout(() => {
+        setIsHydrated(true);
+      }, 5000);
+    }
 
-  if (!isHydrated && !auth.isInitialized) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <div className="flex flex-col items-center space-y-4">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
-          <p className="text-sm text-gray-500">Loading session...</p>
-        </div>
-      </div>
-    );
-  }
+    return () => {
+      if (hydrationTimeout.current) {
+        clearTimeout(hydrationTimeout.current);
+      }
+    };
+  }, [auth.isInitialized]);
 
   return (
-    <AuthContext.Provider value={auth}>
+    <AuthContext.Provider value={{ ...auth, isHydrated }}>
       {children}
     </AuthContext.Provider>
   );
@@ -65,6 +64,8 @@ export default function Providers({ children }) {
           queries: {
             staleTime: 60 * 1000,
             refetchOnWindowFocus: false,
+            retry: 1,
+            retryDelay: 1000,
           },
         },
       })
@@ -72,9 +73,11 @@ export default function Providers({ children }) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ProductProvider>
       <AuthProvider>
         {children}
       </AuthProvider>
+      </ProductProvider>
     </QueryClientProvider>
   );
 }

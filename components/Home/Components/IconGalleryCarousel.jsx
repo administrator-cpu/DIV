@@ -3,15 +3,25 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { DIV_PRODUCTS } from "../../../src/constants/productsData"; // Check your import path!
 import Link from "next/link";
+// Optional: Import a fallback icon in case your DB's iconUrl is null
+import { PackageIcon } from "lucide-react"; 
+import { useProducts } from "@/components/Product/ProductContext";
 
+// 1. Accept `products` as a prop instead of importing the static DIV_PRODUCTS
 export default function IconGalleryCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const router = useRouter();
+  const router = useRouter();  
+  const { products, getServiceProducts } = useProducts();
+  
+    useEffect(() => {
+      getServiceProducts();
+    }, [getServiceProducts]);
+  
 
-  const len = DIV_PRODUCTS.length;
+  // 2. Use the length of the dynamic prop
+  const len = products.length;
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev === len - 1 ? 0 : prev + 1));
@@ -32,40 +42,19 @@ export default function IconGalleryCarousel() {
   const getCardAnimation = (index) => {
     const diff = (index - currentSlide + len) % len;
 
-    if (diff === 0)
-      return { x: 0, y: 0, rotate: 0, scale: 1.1, zIndex: 30, opacity: 1 };
-    if (diff === 1)
-      return { x: 180, y: 30, rotate: 6, scale: 0.95, zIndex: 20, opacity: 1 };
-    if (diff === len - 1)
-      return {
-        x: -180,
-        y: 30,
-        rotate: -6,
-        scale: 0.95,
-        zIndex: 20,
-        opacity: 1,
-      };
-    if (diff === 2)
-      return {
-        x: 340,
-        y: 60,
-        rotate: 12,
-        scale: 0.85,
-        zIndex: 10,
-        opacity: 0.7,
-      };
-    if (diff === len - 2)
-      return {
-        x: -340,
-        y: 60,
-        rotate: -12,
-        scale: 0.85,
-        zIndex: 10,
-        opacity: 0.7,
-      };
+    if (diff === 0) return { x: 0, y: 0, rotate: 0, scale: 1.1, zIndex: 30, opacity: 1 };
+    if (diff === 1) return { x: 180, y: 30, rotate: 6, scale: 0.95, zIndex: 20, opacity: 1 };
+    if (diff === len - 1) return { x: -180, y: 30, rotate: -6, scale: 0.95, zIndex: 20, opacity: 1, };
+    if (diff === 2) return { x: 340, y: 60, rotate: 12, scale: 0.85, zIndex: 10, opacity: 0.7, };
+    if (diff === len - 2) return { x: -340, y: 60, rotate: -12, scale: 0.85, zIndex: 10, opacity: 0.7, };
 
     return { x: 0, y: 150, rotate: 0, scale: 0.5, zIndex: 0, opacity: 0 };
   };
+
+  // Guard clause: If there is no data yet, don't render the carousel
+  if (!products || products.length === 0) {
+    return null; // Or a loading spinner
+  }
 
   return (
     <section
@@ -84,13 +73,13 @@ export default function IconGalleryCarousel() {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {DIV_PRODUCTS.map((slide, index) => {
+        {products.map((slide, index) => {
           const animState = getCardAnimation(index);
           const isActive = index === currentSlide;
 
           return (
             <motion.div
-              key={slide.id}
+              key={slide._id} // Changed from slide.id to slide._id
               initial={false}
               animate={{
                 x: animState.x,
@@ -108,8 +97,9 @@ export default function IconGalleryCarousel() {
               }}
               onClick={() => {
                 const diff = (index - currentSlide + len) % len;
-                if (diff === 0 && slide.link) {
-                  router.push(slide.link);
+                if (diff === 0) {
+                  // If it's the active center slide, navigate to its page
+                  router.push(`/products/${slide.slug || slide._id}`);
                 } else if (diff === 1 || diff === 2) {
                   nextSlide();
                 } else if (diff === len - 1 || diff === len - 2) {
@@ -127,43 +117,32 @@ export default function IconGalleryCarousel() {
                 <div className="absolute inset-0 bg-white/40 rounded-3xl z-10 pointer-events-none transition-colors duration-300" />
               )}
 
-              {/* Dynamic Icon added here */}
-              <div className="w-12 h-12 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center mb-6">
-                {slide.heroIcon && <slide.heroIcon className="w-6 h-6" />}
+              {/* 3. Updated Icon Logic to use DB 'iconUrl' or fallback */}
+              <div className="w-12 h-12 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center mb-6 overflow-hidden">
+                {slide.iconUrl ? (
+                  <img src={slide.iconUrl} alt={slide.title} className="w-6 h-6 object-contain" />
+                ) : (
+                  <PackageIcon className="w-6 h-6" /> // Fallback icon since iconUrl is null in DB
+                )}
               </div>
 
               <h3 className="text-xl font-bold text-gray-900 mb-4">
                 {slide.title}
               </h3>
-              <p className="text-gray-500 text-sm leading-relaxed mb-8 h-20">
-                {slide.shortDesc}
+              
+              {/* 4. Changed from shortDesc to description, added line-clamp to keep card size uniform */}
+              <p className="text-gray-500 text-sm leading-relaxed mb-8 h-20 line-clamp-3">
+                {slide.description}
               </p>
 
-              {/* <button
-                aria-label={`Learn more about ${slide.title}`}
-                type="button"
-                onClick={() => {
-                  if (isActive) {
-                    router.push(`/products/${slide.id}`);
-                  }
-                }}
-                className={`px-6 py-2 rounded-full font-medium text-sm transition-all shadow-md ${
-                  isActive
-                    ? "bg-gradient-to-r from-pink-500 to-yellow-400 text-white hover:opacity-90 hover:scale-105"
-                    : "bg-gray-100 text-gray-400"
-                }`}
-                tabIndex={isActive ? 0 : -1}
-              >
-                {isActive ? "See More" : "View"}
-              </button> */}
               <Link
-                // Change this href to wherever you want them to go (e.g., slide.link)
-                href={`/products/${slide.id}`}
+                // 5. Using slug (preferable for SEO) or _id as a fallback
+                href={`/products/${slide.slug || slide._id}`}
                 aria-label={`Learn more about ${slide.title}`}
                 className={`px-6 py-2 inline-block text-center rounded-full font-medium text-sm transition-all shadow-md ${
                   isActive
                     ? "bg-gradient-to-r from-pink-500 to-yellow-400 text-white hover:opacity-90 hover:scale-105 cursor-pointer"
-                    : "bg-gray-100 text-gray-400 pointer-events-none" // Prevents clicking if inactive
+                    : "bg-gray-100 text-gray-400 pointer-events-none" 
                 }`}
                 tabIndex={isActive ? 0 : -1}
               >

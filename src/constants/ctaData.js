@@ -12,6 +12,6 @@ export const ctaData = {
   description: "Ready to scale your digital infrastructure? Connect with our engineering team to discuss custom software, CRM workflows, or API integrations.",
   button: {
     label: "Contact Us",
-    href: "/contact" // Make sure this matches your actual routing!
+    href: "/support" // Make sure this matches your actual routing!
   }
 };
