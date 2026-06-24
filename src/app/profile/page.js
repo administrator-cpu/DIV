@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAuthContext } from '@/components/Providers';
 import api from '@/lib/axios';
-import LoadingScreen from '@/components/auth/LoadingScreen';
+import LoadingScreen from '@/components/Auth/LoadingScreen';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ── Validation Schemas ──────────────────────────────────────────────────────
