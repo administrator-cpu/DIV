@@ -75,7 +75,7 @@ export default function RootLayout({ children }) {
           <Footer />
         </Providers>
         <SpeedInsights />
-        <GoogleAnalytics />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         <Analytics/>
       </body>
     </html>

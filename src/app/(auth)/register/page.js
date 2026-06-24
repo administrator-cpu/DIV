@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -21,7 +21,8 @@ const RIGHT_FEATURES = [
   'Priority support and dedicated resources',
 ];
 
-export default function RegisterPage() {
+// 1. Rename the original function to RegisterContent
+function RegisterContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { register: registerUser } = useRegister({ endpoint: '/auth/register', method: 'post' });
@@ -133,6 +134,21 @@ export default function RegisterPage() {
         <Link href="/login" className="font-semibold text-blue-600 hover:text-blue-500">Sign in</Link>
       </p>
     </AuthLayout>
+  );
+}
+
+// 2. Export the main page with a Suspense boundary
+export default function RegisterPage() {
+  return (
+    <Suspense 
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-gray-50">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+        </div>
+      }
+    >
+      <RegisterContent />
+    </Suspense>
   );
 }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -22,7 +22,8 @@ const RIGHT_FEATURES = [
   'Monitor analytics and performance',
 ];
 
-export default function LoginPage() {
+// 1. Rename your original function and remove 'export default'
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login, error: sdkError } = useLogin({ endpoint: '/auth/login', method: 'post' });
@@ -68,36 +69,6 @@ export default function LoginPage() {
     }
   }, [sdkError]);
 
-  // const onSubmit = async (data) => {
-  //   setServerError('');
-
-  //   try {
-  //     const result = await login(data);
-
-  //     if (result.success) {
-  //       const returnUrl = searchParams.get('returnUrl') || '/';
-  //       window.location.href = returnUrl;
-  //     }
-  //   } catch (error) {
-  //     console.log('Full error object:', error); // Debug: See what the SDK returns
-
-  //     // ✅ Try multiple ways to extract the error message
-  //     const message = 
-  //       error.response?.data?.error ||           // Backend: { error: "Invalid credentials" }
-  //       error.response?.data?.message ||         // Backend: { message: "..." }
-  //       error.message ||                         // Axios: "Request failed with status code 401"
-  //       'Invalid email or password. Please try again.';
-
-  //     // ✅ Don't show generic Axios messages
-  //     if (message.includes('status code 401')) {
-  //       setServerError('Invalid email or password. Please try again.');
-  //     } else {
-  //       setServerError(message);
-  //     }
-  //   }
-  // };
-
-
   const onSubmit = async (data) => {
     setServerError('');
     try {
@@ -106,8 +77,7 @@ export default function LoginPage() {
         window.location.href = searchParams.get('returnUrl') || '/';
       }
     } catch (error) {
-      // SDK already set the error, but just in case:
-      console.error('Full error object:', error); // Debug: See what the SDK returns
+      console.error('Full error object:', error); 
 
       if (!sdkError) {
         setServerError('Invalid email or password. Please try again.');
@@ -171,5 +141,13 @@ export default function LoginPage() {
         <Link href="/register" className="font-semibold text-blue-600 hover:text-blue-500">Create one now</Link>
       </p>
     </AuthLayout>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoadingScreen message="Loading..." />}>
+      <LoginContent />
+    </Suspense>
   );
 }
