@@ -10,14 +10,12 @@ export const fetchProducts = async ({ queryKey }) => {
   if (sort) params.sort = sort;
   
   const response = await api.get('/services', { params });
-  console.log(response.data)
 
   return response.data;
 };
 
 export const fetchProductBySlug = async (slug) => {
   const response = await api.get(`/services/${slug}`);
-  console.log(response.data)
   return response.data.data;
 };
 
