@@ -10,7 +10,6 @@ import PreviewImages from '@/components/Product/PreviewImages';
 
 export default function ProductDetailClient({ product: initialProduct, initialDataUpdatedAt }) {
   const [showVideo, setShowVideo] = useState(false);
-  console.log(product)
 
   const { data: product } = useProduct(initialProduct.slug, {
     initialData: initialProduct,

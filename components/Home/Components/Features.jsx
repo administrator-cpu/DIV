@@ -52,14 +52,12 @@ export default function Features() {
 
   const activeProduct = products[activeIndex];
 
-  console.log(activeProduct)
   //  const imgSrc = hasError ? PLACEHOLDER : resolveImageUrl(src);
 
   // 3. Map database images (with fallbacks if the array is empty)
   const primaryImage = resolveImageUrl(activeProduct.previewImages?.[0]?.url) || '/products/placeholder.svg';
   const secondaryImage = resolveImageUrl(activeProduct.previewImages?.[1]?.url) || "/placeholder-secondary.webp";
 
-  console.log("Primary Image URL is:", primaryImage);
 
   // 4. Safely handle split text formatting for the title/tagline
   // Assuming we use 'title' as the big text since 'tagline' isn't in your DB schema
