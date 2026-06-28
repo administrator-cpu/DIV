@@ -29,7 +29,7 @@ export const SERVICES_PAGE_DATA = {
       shortDesc: "Full-stack web applications and custom CRMs engineered from the ground up for your specific operational logic.",
       icon: CodeIcon,
       deliverables: ["Internal Dashboards & ERPs", "Custom CRM Development", "Legacy System Modernization"],
-      caseStudy: { text: "See how we built Connect CRM ↗", href: "/products/connect" }
+      caseStudy: { text: "See how we built Connect CRM ↗", href: "/products/connect-crm" }
     },
     {
       id: "ui-ux-architecture",
@@ -52,7 +52,7 @@ export const SERVICES_PAGE_DATA = {
       shortDesc: "Deploy applications on secure, auto-scaling cloud environments utilizing multi-factor access rules and encrypted databases.",
       icon: ServerIcon,
       deliverables: ["AWS / Vercel Deployment", "Maker-Checker Verification Setup", "Database Architecture"],
-      caseStudy: { text: "See our dual-layer security in Bahi Khata ↗", href: "/products/bahikhata" }
+      caseStudy: { text: "See our dual-layer security in Bahi Khata ↗", href: "/products/bahi-khata" }
     }
   ],
 
@@ -79,6 +79,6 @@ export const SERVICES_PAGE_DATA = {
     headline: "Ready to modernize your infrastructure?",
     subheadline: "Stop letting legacy systems slow down your growth. Let's map out a scalable architecture tailored to your exact operational needs.",
     btnText: "Book a Technical Consultation",
-    btnHref: "/contact"
+    btnHref: "/support"
   }
 };

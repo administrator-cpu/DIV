@@ -87,10 +87,10 @@ export default function ProductDetailClient({ product: initialProduct, initialDa
                 Get in touch to discuss how {currentProduct.title} can transform your business.
               </p>
               <a
-                href="/contact"
+                href="/support"
                 className="block w-full text-center px-6 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-yellow-400 text-sm font-bold text-white shadow-lg hover:from-pink-600 hover:to-yellow-500 transition-all"
               >
-                Get This Product
+                Book Demo
               </a>
             </div>
           </aside>

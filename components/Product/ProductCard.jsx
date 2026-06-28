@@ -67,7 +67,7 @@ export default function ProductCard({ product, priority = false }) {
               alt={firstImage.alt || product.title}
               width={dims.width}
               height={dims.height}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
               loading={priority ? undefined : 'lazy'}
               priority={priority}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -79,7 +79,7 @@ export default function ProductCard({ product, priority = false }) {
                 src={imgSrc}
                 alt={firstImage.alt || product.title}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                className="object-cover group-hover:scale-105 object-top transition-transform duration-300"
                 loading={priority ? undefined : 'lazy'}
                 priority={priority}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

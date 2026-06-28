@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SUPPORT_PAGE_DATA, MailIcon, MapPinIcon, FileTextIcon } from '../../constants/supportData';
+import { sendEmail } from '../actions';
+// import { sendEmail } from './actions';
 
 export default function SupportPage() {
   const { hero, contactInfo, faqs } = SUPPORT_PAGE_DATA;
@@ -13,26 +15,20 @@ export default function SupportPage() {
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' or 'error'
   const [openFaq, setOpenFaq] = useState(0);
 
-  // Handle Input Changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle Form Submission (Wired for your Express API)
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
-      // Assuming your backend is running on the same domain or properly configured for CORS
-      const response = await fetch('/api/v1/contacts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
+      // 2. SWAP OUT THE FETCH REQUEST FOR YOUR SERVER ACTION
+      const result = await sendEmail(formData);
 
-      if (response.ok) {
+      if (result.success) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
@@ -90,7 +86,7 @@ export default function SupportPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
+                {/* <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
                     <MapPinIcon className="w-5 h-5" />
                   </div>
@@ -98,7 +94,7 @@ export default function SupportPage() {
                     <p className="text-sm font-bold text-gray-900 mb-1">Headquarters</p>
                     <p className="text-gray-600">{contactInfo.address}</p>
                   </div>
-                </div>
+                </div> */}
                 
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">

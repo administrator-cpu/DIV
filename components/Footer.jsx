@@ -99,7 +99,7 @@ export default function CleanFooter() {
           {/* 4. Right Column: Address */}
           <address className="md:col-span-4 lg:col-span-3 not-italic">
             <h3 className="text-gray-400 text-xs mb-6 mt-2 uppercase tracking-widest font-bold">
-              Our Headquarters
+              Contact
             </h3>
             <ul className="space-y-4">
               <li>
