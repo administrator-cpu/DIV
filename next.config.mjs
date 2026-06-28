@@ -16,8 +16,8 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'https://api.thediv.in',
-        pathname: '/**', 
+        hostname: 'api.thediv.in', 
+        pathname: '/uploads/**',   
       },
       {
         protocol: 'https',
