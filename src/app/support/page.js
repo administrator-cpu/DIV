@@ -86,7 +86,7 @@ const handleSubmit = async (e) => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
+                {/* <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
                     <MapPinIcon className="w-5 h-5" />
                   </div>
@@ -94,7 +94,7 @@ const handleSubmit = async (e) => {
                     <p className="text-sm font-bold text-gray-900 mb-1">Headquarters</p>
                     <p className="text-gray-600">{contactInfo.address}</p>
                   </div>
-                </div>
+                </div> */}
                 
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
