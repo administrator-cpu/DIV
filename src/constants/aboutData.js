@@ -60,13 +60,13 @@ export const ABOUT_PAGE_DATA = {
     heading: "Technical Leadership",
     description: "Led by a team of advanced full-stack developers and strategic architects dedicated to modernizing enterprise technology.",
     members: [
-      {
-        id: "harsh-jha",
-        name: "Harsh Jha",
-        role: "Founder & Lead Technical Architect",
-        bio: "Specializing in advanced full-stack development and strategic planning, Harsh drives the technical vision of DIV. With deep expertise in Next.js, React, and Node.js ecosystems, he architects custom CRMs and B2B platforms designed for maximum operational efficiency.",
-        initials: "HJ"
-      },
+      // {
+      //   id: "harsh-jha",
+      //   name: "Harsh Jha",
+      //   role: "Founder & Lead Technical Architect",
+      //   bio: "Specializing in advanced full-stack development and strategic planning, Harsh drives the technical vision of DIV. With deep expertise in Next.js, React, and Node.js ecosystems, he architects custom CRMs and B2B platforms designed for maximum operational efficiency.",
+      //   initials: "HJ"
+      // },
       {
         id: "ayush",
         name: "Ayush",

@@ -159,7 +159,7 @@ export default function AboutPage() {
       </section>
 
       {/* --- HEADQUARTERS / LOCATION --- */}
-      <section className="bg-gray-50 w-full py-20 px-6 border-t border-gray-200/60">
+      {/* <section className="bg-gray-50 w-full py-20 px-6 border-t border-gray-200/60">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8 justify-between">
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">{headquarters.heading}</h2>
@@ -176,7 +176,7 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
     </main>
   );

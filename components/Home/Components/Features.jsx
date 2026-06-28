@@ -14,6 +14,8 @@ export default function Features() {
   const [isPaused, setIsPaused] = useState(false);
   const { products, getServiceProducts } = useProducts();
 
+  console.log(products)
+
 
   useEffect(() => {
     getServiceProducts();
