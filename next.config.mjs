@@ -16,6 +16,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'https://api.thediv.in',
+        pathname: '/**', 
+      },
+      {
+        protocol: 'https',
         hostname: 'img.youtube.com',
         port: '',
         pathname: '/**',
